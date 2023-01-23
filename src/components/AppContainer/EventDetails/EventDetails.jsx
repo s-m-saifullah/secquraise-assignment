@@ -1,7 +1,9 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../../../contexts/DataProvider";
 
-const EventDetails = ({ currentEvent }) => {
+const EventDetails = () => {
+  const { currentEvent } = useContext(DataContext);
   // console.log(currentEvent);
   const { id, Location, Gender, Name, date, Time, Image } = currentEvent;
   const dt = new Date(`${date} ${Time}`);

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../assets/logo.webp";
 import { FaSearch } from "react-icons/fa";
+import { DataContext } from "../contexts/DataProvider";
 
-const Navbar = ({ events }) => {
+const Navbar = () => {
+  const { events } = useContext(DataContext);
   const noOfMale = events.filter((event) => event.Gender === "Male").length;
   const noOfFemale = events.filter((event) => event.Gender === "Female").length;
   return (

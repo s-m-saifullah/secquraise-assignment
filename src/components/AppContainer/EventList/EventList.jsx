@@ -1,17 +1,14 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { RiListSettingsFill } from "react-icons/ri";
+import { DataContext } from "../../../contexts/DataProvider";
 import EventCard from "./EventCard";
 
-const EventList = ({
-  events,
-  currentEvent,
-  setCurrentEvent,
-  filters,
-  setFilters,
-}) => {
+const EventList = () => {
   const [filterActive, setFilterActive] = useState(false);
+  const { events, currentEvent, setCurrentEvent, filters, setFilters } =
+    useContext(DataContext);
 
   return (
     <div className="col-span-3 max-h-screen border-8 border-neutral-300 p-5 overflow-y-scroll">
@@ -98,12 +95,7 @@ const EventList = ({
       )}
       <div className="">
         {events.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            currentEvent={currentEvent}
-            setCurrentEvent={setCurrentEvent}
-          />
+          <EventCard key={event.id} event={event} />
         ))}
       </div>
     </div>

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../../../contexts/DataProvider";
 
-const EventCard = ({ event, currentEvent, setCurrentEvent }) => {
+const EventCard = ({ event }) => {
+  const { currentEvent, setCurrentEvent } = useContext(DataContext);
   const { id, Location, date, Time } = event;
   return (
     <div

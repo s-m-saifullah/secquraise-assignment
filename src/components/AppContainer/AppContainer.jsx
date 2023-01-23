@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import EventDetails from "./EventDetails/EventDetails";
 import EventList from "./EventList/EventList";
 import LeftSideBar from "../LeftSideBar";
+import { DataContext } from "../../contexts/DataProvider";
 
-const AppContainer = ({
-  currentEvent,
-  setCurrentEvent,
-  events,
-  filters,
-  setFilters,
-  loading,
-}) => {
-  console.log(loading);
+const AppContainer = () => {
+  const {
+    currentEvent,
+    setCurrentEvent,
+    events,
+    filters,
+    setFilters,
+    loading,
+  } = useContext(DataContext);
+
+  // console.log(loading);
   return (
     <div className="grid grid-cols-12 h-[93vh]">
       <LeftSideBar />
@@ -20,7 +23,7 @@ const AppContainer = ({
           <h4 className="font-bold text-3xl">Loading...</h4>
         </div>
       ) : currentEvent ? (
-        <EventDetails currentEvent={currentEvent} />
+        <EventDetails />
       ) : (
         <div className="col-span-8 grid place-items-center">
           <h4 className="font-bold text-3xl">
@@ -28,13 +31,7 @@ const AppContainer = ({
           </h4>
         </div>
       )}
-      <EventList
-        events={events}
-        currentEvent={currentEvent}
-        setCurrentEvent={setCurrentEvent}
-        filters={filters}
-        setFilters={setFilters}
-      />
+      <EventList />
     </div>
   );
 };
