@@ -1,12 +1,35 @@
 import { format } from "date-fns";
-import React, { useContext } from "react";
+import { getDownloadURL, ref } from "firebase/storage";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataProvider";
+import { storage } from "../../../firebase.config";
 
 const EventDetails = () => {
+  const [currentImage, setCurrentImage] = useState(null);
+  const [imgLoading, setImgLoading] = useState(false);
   const { currentEvent } = useContext(DataContext);
   // console.log(currentEvent);
   const { id, Location, Gender, Name, date, Time, Image } = currentEvent;
   const dt = new Date(`${date} ${Time}`);
+
+  const imagePathRef = ref(
+    storage,
+    `gs://secquraise-assignment-cc761.appspot.com/${Name}.jpg`
+  );
+
+  useEffect(() => {
+    setCurrentImage(null);
+    setImgLoading(true);
+    getDownloadURL(imagePathRef)
+      .then((url) => {
+        setCurrentImage(url);
+        setImgLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, [currentEvent]);
+
+  console.log(currentImage);
+
   return (
     <div className="col-span-8 py-5 pr-10">
       <h2 className="text-center text-2xl font-bold mb-10">{Gender}</h2>
@@ -48,7 +71,13 @@ const EventDetails = () => {
           </p>
         </div>
         <div>
-          <img className="max-h-[80vh]" src={Image} alt="" />
+          {imgLoading ? (
+            <div className="h-full grid place-items-center">
+              <h5 className="text-3xl">Loading...</h5>
+            </div>
+          ) : (
+            <img className="max-h-[80vh]" src={currentImage} alt="" />
+          )}
         </div>
       </div>
     </div>
